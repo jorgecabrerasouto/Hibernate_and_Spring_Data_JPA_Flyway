@@ -1,0 +1,30 @@
+package co.com.jorgecabrerasouto.sdjpaintro;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ActiveProfiles;
+
+import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookRepository;
+
+
+@ActiveProfiles("local")
+@DataJpaTest
+@ComponentScan(basePackages = {"co.com.jorgecabrerasouto.sdjpaintro.bootstrap"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class MySQLIntegrationTest {
+
+    @Autowired
+    BookRepository bookRepository;
+
+    @Test
+    void testMySQL() {
+        long countBefore = bookRepository.count();
+        assertThat(countBefore).isEqualTo(2);
+
+    }
+}
