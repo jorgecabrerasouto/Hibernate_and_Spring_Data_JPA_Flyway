@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.sdjpaintro.domain.AuthorUuid;
 import co.com.jorgecabrerasouto.sdjpaintro.domain.Book;
+import co.com.jorgecabrerasouto.sdjpaintro.domain.BookUuid;
 import co.com.jorgecabrerasouto.sdjpaintro.repositories.AuthorUuidRepository;
 import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookRepository;
+import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookUuidRepository;
 
 @Profile({"local", "default"})
 @Component
@@ -15,10 +17,12 @@ public class DataInitializer implements CommandLineRunner {
 	
 	private final BookRepository bookRepository;
 	private final AuthorUuidRepository authorUuidRepository;
+    private final BookUuidRepository bookUuidRepository;
 	
-	public DataInitializer(BookRepository bookRepository, AuthorUuidRepository authorUuidRepository) {
+	public DataInitializer(BookRepository bookRepository, AuthorUuidRepository authorUuidRepository, BookUuidRepository bookUuidRepository) {
 		this.bookRepository = bookRepository;
 		this.authorUuidRepository = authorUuidRepository;
+		 this.bookUuidRepository = bookUuidRepository;
 	}
 
 	@Override
@@ -41,6 +45,11 @@ public class DataInitializer implements CommandLineRunner {
         authorUuid.setLastName("Buck");
         AuthorUuid savedAuthor = authorUuidRepository.save(authorUuid);
         System.out.println("Saved Author UUID: " + savedAuthor.getId() );
+        
+        BookUuid bookUuid = new BookUuid();
+        bookUuid.setTitle("All About UUIDs");
+        BookUuid savedBookUuid = bookUuidRepository.save(bookUuid);
+        System.out.println("Saved Book UUID: " + savedBookUuid.getId());
 	}
 
 }
