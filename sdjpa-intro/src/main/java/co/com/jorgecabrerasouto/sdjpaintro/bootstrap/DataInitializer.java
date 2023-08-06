@@ -8,6 +8,7 @@ import co.com.jorgecabrerasouto.sdjpaintro.domain.AuthorUuid;
 import co.com.jorgecabrerasouto.sdjpaintro.domain.Book;
 import co.com.jorgecabrerasouto.sdjpaintro.domain.BookUuid;
 import co.com.jorgecabrerasouto.sdjpaintro.repositories.AuthorUuidRepository;
+import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookNaturalRepository;
 import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookRepository;
 import co.com.jorgecabrerasouto.sdjpaintro.repositories.BookUuidRepository;
 
@@ -18,11 +19,16 @@ public class DataInitializer implements CommandLineRunner {
 	private final BookRepository bookRepository;
 	private final AuthorUuidRepository authorUuidRepository;
     private final BookUuidRepository bookUuidRepository;
+    private final BookNaturalRepository bookNaturalRepository;
 	
-	public DataInitializer(BookRepository bookRepository, AuthorUuidRepository authorUuidRepository, BookUuidRepository bookUuidRepository) {
+	public DataInitializer(BookRepository bookRepository, 
+			AuthorUuidRepository authorUuidRepository, 
+			BookUuidRepository bookUuidRepository, 
+			BookNaturalRepository bookNaturalRepository) {
 		this.bookRepository = bookRepository;
 		this.authorUuidRepository = authorUuidRepository;
-		 this.bookUuidRepository = bookUuidRepository;
+		this.bookUuidRepository = bookUuidRepository;
+		this.bookNaturalRepository = bookNaturalRepository;
 	}
 
 	@Override
