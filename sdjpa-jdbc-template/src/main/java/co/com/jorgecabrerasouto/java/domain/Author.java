@@ -1,9 +1,12 @@
 package co.com.jorgecabrerasouto.java.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Author {
@@ -13,6 +16,9 @@ public class Author {
 
     private String firstName;
     private String lastName;
+    
+    @Transient
+    private List<Book> books;
 
     public Long getId() {
         return id;
@@ -38,7 +44,15 @@ public class Author {
         this.lastName = lastName;
     }
 
-    @Override
+    public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

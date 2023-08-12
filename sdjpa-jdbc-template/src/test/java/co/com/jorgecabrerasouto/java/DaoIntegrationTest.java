@@ -1,81 +1,152 @@
 package co.com.jorgecabrerasouto.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.test.context.ActiveProfiles;
 
 import co.com.jorgecabrerasouto.java.dao.AuthorDao;
 import co.com.jorgecabrerasouto.java.dao.AuthorDaoImpl;
+import co.com.jorgecabrerasouto.java.dao.BookDao;
+import co.com.jorgecabrerasouto.java.dao.BookDaoImpl;
 import co.com.jorgecabrerasouto.java.domain.Author;
+import co.com.jorgecabrerasouto.java.domain.Book;
 
 @ActiveProfiles("local")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(AuthorDaoImpl.class)
+@Import({ AuthorDaoImpl.class, BookDaoImpl.class })
 
 class DaoIntegrationTest {
 
-    @Autowired
-    AuthorDao authorDao;
+	@Autowired
+	AuthorDao authorDao;
 
-    @Test
-    void testDeleteAuthor() {
-        Author author = new Author();
-        author.setFirstName("john");
-        author.setLastName("t");
+	@Autowired
+	BookDao bookDao;
 
-        Author saved = authorDao.saveNewAuthor(author);
+	@Test
+	void testDeleteBook() {
+		Book book = new Book();
+		book.setIsbn("1234");
+		book.setPublisher("Self");
+		book.setTitle("my book");
+		Book saved = bookDao.saveNewBook(book);
 
-        authorDao.deleteAuthorById(saved.getId());
+		bookDao.deleteBookById(saved.getId());
 
-        Author deleted = authorDao.getById(saved.getId());
+		assertThrows(EmptyResultDataAccessException.class, () -> {
+			bookDao.getById(saved.getId());
+		});
+	}
 
-        assertThat(deleted).isNull();
-    }
+	@Test
+	void updateBookTest() {
+		Book book = new Book();
+		book.setIsbn("1234");
+		book.setPublisher("Self");
+		book.setTitle("my book");
+		book.setAuthorId(1L);
+		Book saved = bookDao.saveNewBook(book);
 
-    @Test
-    void testUpdateAuthor() {
-        Author author = new Author();
-        author.setFirstName("john");
-        author.setLastName("t");
+		saved.setTitle("New Book");
+		bookDao.updateBook(saved);
 
-        Author saved = authorDao.saveNewAuthor(author);
+		Book fetched = bookDao.getById(saved.getId());
 
-        saved.setLastName("Thompson");
-        Author updated = authorDao.updateAuthor(saved);
+		assertThat(fetched.getTitle()).isEqualTo("New Book");
+	}
 
-        assertThat(updated.getLastName()).isEqualTo("Thompson");
-    }
+	@Test
+	void testSaveBook() {
+		Book book = new Book();
+		book.setIsbn("1234");
+		book.setPublisher("Self");
+		book.setTitle("my book");
+		book.setAuthorId(1L);
 
-    @Test
-    void testInsertAuthor() {
-        Author author = new Author();
-        author.setFirstName("john");
-        author.setLastName("t");
+		Book saved = bookDao.saveNewBook(book);
 
-        Author saved = authorDao.saveNewAuthor(author);
+		assertThat(saved).isNotNull();
+	}
 
-        assertThat(saved).isNotNull();
-    }
+	@Test
+	void testGetBookByName() {
+		Book book = bookDao.findBookByTitle("Clean Code");
 
-    @Test
-    void testGetAuthorByName() {
-        Author author = authorDao.findAuthorByName("Craig", "Walls");
+		assertThat(book).isNotNull();
+	}
 
-        assertThat(author).isNotNull();
-    }
+	@Test
+	void testGetBook() {
+		Book book = bookDao.getById(3L);
 
-    @Test
-    void testGetAuthor() {
+		assertThat(book.getId()).isNotNull();
+	}
 
-        Author author = authorDao.getById(1l);
+	@Test
+	void testDeleteAuthor() {
+		Author author = new Author();
+		author.setFirstName("john");
+		author.setLastName("t");
 
-        assertThat(author.getId()).isNotNull();
-    }
+		Author saved = authorDao.saveNewAuthor(author);
+
+		authorDao.deleteAuthorById(saved.getId());
+
+        assertThrows(TransientDataAccessResourceException.class, () -> {
+            authorDao.getById(saved.getId());
+		});
+
+	}
+
+	@Test
+	void testUpdateAuthor() {
+		Author author = new Author();
+		author.setFirstName("john");
+		author.setLastName("t");
+
+		Author saved = authorDao.saveNewAuthor(author);
+
+		saved.setLastName("Thompson");
+		Author updated = authorDao.updateAuthor(saved);
+
+		assertThat(updated.getLastName()).isEqualTo("Thompson");
+	}
+
+	@Test
+	void testInsertAuthor() {
+		Author author = new Author();
+		author.setFirstName("john");
+		author.setLastName("t222");
+
+		Author saved = authorDao.saveNewAuthor(author);
+
+		System.out.println("New Id is: " + saved.getId());
+
+		assertThat(saved).isNotNull();
+	}
+
+	@Test
+	void testGetAuthorByName() {
+		Author author = authorDao.findAuthorByName("Craig", "Walls");
+
+		assertThat(author.getId()).isNotNull();
+	}
+
+	@Test
+	void testGetAuthor() {
+
+		Author author = authorDao.getById(1L);
+
+		assertThat(author.getId()).isNotNull();
+	}
 
 }
