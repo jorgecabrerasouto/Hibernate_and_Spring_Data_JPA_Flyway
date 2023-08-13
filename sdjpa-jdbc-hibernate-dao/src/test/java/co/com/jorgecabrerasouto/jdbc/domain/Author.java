@@ -1,4 +1,4 @@
-package co.com.jorgecabrerasouto.java.domain;
+package co.com.jorgecabrerasouto.jdbc.domain;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class Author {
     
     @Transient
     private List<Book> books;
-    
+
     public Long getId() {
         return id;
     }
