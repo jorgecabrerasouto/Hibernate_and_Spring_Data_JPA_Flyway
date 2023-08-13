@@ -3,12 +3,21 @@ package co.com.jorgecabrerasouto.jdbc.dao;
 import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
-    @Override
+   
+	private final EntityManagerFactory emf;
+	
+	public AuthorDaoImpl(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	@Override
     public Author getById(Long id) {
-        return null;
+        return getEntityManager().find(Author.class, id);
     }
 
     @Override
@@ -29,5 +38,8 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void deleteAuthorById(Long id) {
 
+    }
+    private EntityManager getEntityManager() {
+    	return emf.createEntityManager();
     }
 }
