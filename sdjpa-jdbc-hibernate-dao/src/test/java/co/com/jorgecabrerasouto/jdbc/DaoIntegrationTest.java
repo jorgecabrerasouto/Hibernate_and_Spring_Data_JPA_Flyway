@@ -101,11 +101,11 @@ public class DaoIntegrationTest {
         Author saved = authorDao.saveNewAuthor(author);
 
         authorDao.deleteAuthorById(saved.getId());
+       
+        Author deleted = authorDao.getById(saved.getId());
+        assertThat(deleted).isNull();
 
-        assertThrows(EmptyResultDataAccessException.class, () -> {
-            Author deleted = authorDao.getById(saved.getId());
-        });
-
+        assertThat(authorDao.getById(saved.getId()));
     }
 
     @Test
