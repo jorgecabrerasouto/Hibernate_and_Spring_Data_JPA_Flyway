@@ -6,8 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Transient;
 
+@NamedQuery(name = "author_find_all", query = "FROM Author")
 @Entity
 public class Author {
     @Id

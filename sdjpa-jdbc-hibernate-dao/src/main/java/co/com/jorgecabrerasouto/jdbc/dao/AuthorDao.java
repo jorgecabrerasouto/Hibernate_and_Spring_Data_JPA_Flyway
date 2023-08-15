@@ -5,6 +5,8 @@ import java.util.List;
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
 
 public interface AuthorDao {	
+	List<Author> findAll();
+	
 	List<Author> listAuthorByLastNameLike(String lastName);
 	
 	Author getById(Long id);
