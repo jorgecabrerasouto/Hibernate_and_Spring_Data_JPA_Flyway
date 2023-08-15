@@ -1,5 +1,7 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Book;
@@ -15,6 +17,19 @@ public class BookDaoImpl implements BookDao {
         this.emf = emf;
     }
 
+    @Override
+    public List<Book> findAll() {
+        EntityManager em = getEntityManager();
+
+        try{
+            TypedQuery<Book> typedQuery = em.createNamedQuery("book_find_all", Book.class);
+
+            return typedQuery.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 	@Override
 	public Book findBookByISBN(String isbn) {
         EntityManager em = getEntityManager();
@@ -42,7 +57,7 @@ public class BookDaoImpl implements BookDao {
     public Book findBookByTitle(String title) {
         EntityManager em = getEntityManager();
         TypedQuery<Book> query = em
-                .createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
+                .createNamedQuery("find_by_title",Book.class);
         query.setParameter("title", title);
         Book book = query.getSingleResult();
         em.close();

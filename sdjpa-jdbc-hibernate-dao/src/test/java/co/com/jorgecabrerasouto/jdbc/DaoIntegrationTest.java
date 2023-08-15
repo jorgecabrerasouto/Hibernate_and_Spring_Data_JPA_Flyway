@@ -31,6 +31,28 @@ public class DaoIntegrationTest {
     BookDao bookDao;
     
     @Test
+    void testFindAllBooks() {
+    	List<Book> books = bookDao.findAll();
+    
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
+    
+    @Test
+    void testFindBookByTitle() {
+        Book book = new Book();
+        book.setIsbn("1235" + RandomString.make());
+        book.setTitle("TITLETEST2");
+
+        Book saved = bookDao.saveNewBook(book);
+
+        Book fetched = bookDao.findBookByTitle(book.getTitle());
+        assertThat(fetched).isNotNull();
+
+        bookDao.deleteBookById(saved.getId());
+    }
+    
+    @Test
     void testFindAllAuthors() {
     	List<Author> authors = authorDao.findAll();
     
