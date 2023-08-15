@@ -10,10 +10,10 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Transient;
 
-@NamedQueries ({
-@NamedQuery(name = "author_find_all", query = "FROM Author"),
-@NamedQuery(name = "find_by_name", query = "FROM Author a WHERE a.firstName = :first_name AND a.lastName = :last_name")
-})
+@NamedQueries({ 
+		@NamedQuery(name = "author_find_all", query = "FROM Author"),
+		@NamedQuery(name = "find_by_name", query = "FROM Author a WHERE a.firstName = :first_name AND a.lastName = :last_name") 
+		})
 @Entity
 public class Author {
     @Id
