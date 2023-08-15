@@ -1,10 +1,13 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 @Component
@@ -15,6 +18,21 @@ public class AuthorDaoImpl implements AuthorDao {
 	public AuthorDaoImpl(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
+	
+	@Override
+    public List<Author> listAuthorByLastNameLike(String lastName) {
+        EntityManager em = getEntityManager();
+
+        try {
+            Query query = em.createQuery("SELECT a from Author a where a.lastName like :last_name");
+            query.setParameter("last_name", lastName + "%");
+            List<Author> authors = query.getResultList();
+
+            return authors;
+        } finally {
+            em.close();
+        }
+    }
 
 	@Override
     public Author getById(Long id) {
@@ -78,4 +96,5 @@ public class AuthorDaoImpl implements AuthorDao {
     private EntityManager getEntityManager() {
     	return emf.createEntityManager();
     }
+
 }
