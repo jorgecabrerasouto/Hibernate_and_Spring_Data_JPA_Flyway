@@ -17,6 +17,7 @@ import co.com.jorgecabrerasouto.jdbc.dao.BookDao;
 import co.com.jorgecabrerasouto.jdbc.dao.BookDaoImpl;
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
 import co.com.jorgecabrerasouto.jdbc.domain.Book;
+import net.bytebuddy.utility.RandomString;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -28,6 +29,18 @@ public class DaoIntegrationTest {
 
     @Autowired
     BookDao bookDao;
+    
+    @Test
+    void testFindBookByISBN() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST");
+
+        Book saved = bookDao.saveNewBook(book);
+
+        Book fetched = bookDao.findBookByISBN(book.getIsbn());
+        assertThat(fetched).isNotNull();
+    }
     
     @Test
     void testListAuthorByLastNameLike () {
