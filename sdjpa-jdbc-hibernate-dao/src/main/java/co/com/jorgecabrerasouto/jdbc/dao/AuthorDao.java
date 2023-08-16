@@ -19,6 +19,8 @@ public interface AuthorDao {
 
 	void deleteAuthorById(Long id);
 	
-	Author findAuthorByNameCriteria(String Craig, String Walls);
+	Author findAuthorByNameCriteria(String firstName, String lastName);
+	
+	Author findAuthorByNameNative(String firstName, String lastName);
 	
 }
