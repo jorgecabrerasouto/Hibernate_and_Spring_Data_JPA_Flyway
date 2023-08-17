@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
 import co.com.jorgecabrerasouto.jdbc.repositories.AuthorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Component
@@ -22,7 +23,8 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        return authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName);
+        return authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName)
+        		.orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

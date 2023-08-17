@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import co.com.jorgecabrerasouto.jdbc.dao.AuthorDao;
 import co.com.jorgecabrerasouto.jdbc.dao.AuthorDaoImpl;
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
+import jakarta.persistence.EntityNotFoundException;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -139,6 +140,13 @@ public class DaoIntegrationTest {
         Author author = authorDao.findAuthorByName("Craig", "Walls");
 
         assertThat(author).isNotNull();
+    }
+    
+    @Test
+    void testGetAuthorByNameNotFound() {
+    	assertThrows(EntityNotFoundException.class, () -> {    		
+    		Author author = authorDao.findAuthorByName("foo", "bar");
+    	});
     }
 
     @Test
