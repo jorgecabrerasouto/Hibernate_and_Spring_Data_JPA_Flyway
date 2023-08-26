@@ -1,9 +1,12 @@
 package co.com.jorgecabrerasouto.jdbc;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,16 @@ public class BookRepositoryTest {
 
     @Autowired
     BookRepository bookRepository;
+    
+    @Test
+    void testBookFuture() throws ExecutionException, InterruptedException {
+    	Future <Book> bookFuture = bookRepository.queryByTitle("Clean Code");
+    	
+    	Book book = bookFuture.get();
+    	
+    	assertNotNull(book);
+    	
+    }
 
     @Test
     void testBookStream () {
