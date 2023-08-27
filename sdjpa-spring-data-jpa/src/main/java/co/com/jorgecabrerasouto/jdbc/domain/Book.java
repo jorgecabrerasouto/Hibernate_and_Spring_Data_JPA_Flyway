@@ -1,11 +1,14 @@
 package co.com.jorgecabrerasouto.jdbc.domain;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Objects;
+import jakarta.persistence.NamedQuery;
 
+@NamedQuery(name = "Book.jpaNamed", query = "FROM Book b where b.title = :title")
 @Entity
 public class Book {
 

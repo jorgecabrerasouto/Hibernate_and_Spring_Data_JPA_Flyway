@@ -14,10 +14,15 @@ import co.com.jorgecabrerasouto.jdbc.domain.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 	
-	@Query("SELECT b FROM Book b where b.title = :title")
+    Book jpaNamed(@Param("title") String title);
+	
+	@Query(value = "SELECT * FROM book WHERE title = :title", nativeQuery = true)
+	Book findBookByTitleNativeQuery(@Param("title") String title);
+	
+	@Query("SELECT b FROM Book b WHERE b.title = :title")
 	Book findByTitleWithQueryNamed(@Param("title") String title);
 	
-	@Query("SELECT b FROM Book b where b.title = ?1")
+	@Query("SELECT b FROM Book b WHERE b.title = ?1")
 	Book findBookWithQuery(String string);
 	
 	Optional<Book> findBookByTitle(String title);
