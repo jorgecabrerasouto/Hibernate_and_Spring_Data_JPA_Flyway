@@ -8,6 +8,8 @@ import co.com.jorgecabrerasouto.jdbc.domain.Book;
 
 public interface BookDao {
 	
+	List<Book> findAllBooksSortByTitle(Pageable pageable);
+	
 	List<Book> findAllBooks(Pageable pagable);
 	
 	List <Book> findAllBooks(int pageSize, int offset);
