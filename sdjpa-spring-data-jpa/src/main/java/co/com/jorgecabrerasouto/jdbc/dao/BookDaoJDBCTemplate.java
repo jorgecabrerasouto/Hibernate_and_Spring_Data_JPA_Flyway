@@ -1,5 +1,7 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Book;
@@ -9,9 +11,20 @@ public class BookDaoJDBCTemplate implements BookDao {
 
     public BookDaoJDBCTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }   
+    
+    @Override
+	public List<Book> findAllBooks (int pageSize, int offset) {
+
+		return null;
+	}
+
+	@Override
+    public List<Book> findAllBooks() {
+    	return jdbcTemplate.query("SELECT * FROM book", getBookMapper());
     }
 
-    @Override
+	@Override
     public Book getById(Long id) {
     	return jdbcTemplate.queryForObject("SELECT * FROM book where id = ?", getBookMapper(), id);
     }

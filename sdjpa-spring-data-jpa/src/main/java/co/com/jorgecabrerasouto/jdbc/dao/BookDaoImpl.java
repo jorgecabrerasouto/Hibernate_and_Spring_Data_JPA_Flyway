@@ -1,5 +1,7 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +17,17 @@ public class BookDaoImpl implements BookDao {
     public BookDaoImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+    
+    @Override
+	public List<Book> findAllBooks(int pageSize, int offset) {
+		return null;
+	}
 
+	@Override
+    public List<Book> findAllBooks() {
+    	return null;
+    }
+    
     @Override
     public Book getById(Long id) {
         return bookRepository.getById(id);

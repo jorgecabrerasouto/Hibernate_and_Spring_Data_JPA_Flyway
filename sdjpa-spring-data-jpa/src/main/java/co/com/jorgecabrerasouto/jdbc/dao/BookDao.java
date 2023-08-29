@@ -1,8 +1,14 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
 import co.com.jorgecabrerasouto.jdbc.domain.Book;
 
 public interface BookDao {
+	
+	List <Book> findAllBooks(int pageSize, int offset);
+	
+	List <Book> findAllBooks();
     
     Book getById(Long id);
 
