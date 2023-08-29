@@ -35,10 +35,27 @@ class BookDaoJDBCTemplateTest {
 
     @Test
     void findAllBooksPage1() {
-    	List<Book> books = bookDao.findAllBooks(10, 0);
+    	List<Book> books = bookDao.findAllBooks(3, 0);
     	
     	assertThat(books).isNotNull();
-    	assertThat(books.size()).isEqualTo(10);
+    	assertThat(books.size()).isEqualTo(3);
+    	
+    }
+    @Test
+    void findAllBooksPage2() {
+    	List<Book> books = bookDao.findAllBooks(3, 3);
+    	
+    	assertThat(books).isNotNull();
+    	assertThat(books.size()).isEqualTo(2);
+    	
+    }
+    
+    @Test
+    void findAllBooksPage3() {
+    	List<Book> books = bookDao.findAllBooks(3, 100);
+    	
+    	assertThat(books).isNotNull();
+    	assertThat(books.size()).isEqualTo(0);
     	
     }
     
