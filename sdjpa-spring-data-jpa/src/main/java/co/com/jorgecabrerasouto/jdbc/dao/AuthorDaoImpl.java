@@ -1,5 +1,8 @@
 package co.com.jorgecabrerasouto.jdbc.dao;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.jdbc.domain.Author;
@@ -15,6 +18,11 @@ public class AuthorDaoImpl implements AuthorDao {
     public AuthorDaoImpl(AuthorRepository authorRepository) {
 		this.authorRepository = authorRepository;
 	}
+
+    @Override
+    public List<Author> findAllAuthorsByLastName(String lastname, Pageable pageable) {
+        return null;
+    }
 
 	@Override
     public Author getById(Long id) {
