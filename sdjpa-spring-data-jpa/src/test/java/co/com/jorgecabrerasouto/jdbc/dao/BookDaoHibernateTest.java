@@ -20,7 +20,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 @ActiveProfiles("local")
 @DataJpaTest
-@ComponentScan(basePackages = {"guru.springframework.jdbc.dao"})
+@ComponentScan(basePackages = {"co.com.jorgecabrerasouto.jdbc.dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class BookDaoHibernateTest {
 
