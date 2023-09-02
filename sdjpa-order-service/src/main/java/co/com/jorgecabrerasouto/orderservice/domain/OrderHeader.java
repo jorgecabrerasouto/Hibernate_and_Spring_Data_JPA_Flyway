@@ -1,25 +1,13 @@
 package co.com.jorgecabrerasouto.orderservice.domain;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class OrderHeader {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderHeader extends BaseEntity {
 
     private String customer;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCustomer() {
         return customer;
@@ -30,20 +18,22 @@ public class OrderHeader {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderHeader that = (OrderHeader) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return customer != null ? customer.equals(that.customer) : that.customer == null;
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderHeader other = (OrderHeader) obj;
+		return Objects.equals(customer, other.customer);
+	}
 
     @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (customer != null ? customer.hashCode() : 0);
-        return result;
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(customer);
+		return result;
+	}
 }
