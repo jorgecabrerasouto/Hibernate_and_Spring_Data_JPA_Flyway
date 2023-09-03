@@ -1,7 +1,11 @@
 package co.com.jorgecabrerasouto.orderservice.domain;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +17,10 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@CreationTimestamp
+	@Column(updatable = false)
+    private Timestamp createdDate;
+    	
 	public Long getId() {
 		return id;
 	}
@@ -21,9 +29,17 @@ public abstract class BaseEntity {
 		this.id = id;
 	}
 
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(createdDate, id);
 	}
 
 	@Override
@@ -35,7 +51,7 @@ public abstract class BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		BaseEntity other = (BaseEntity) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(createdDate, other.createdDate) && Objects.equals(id, other.id);
 	}
     
 }
