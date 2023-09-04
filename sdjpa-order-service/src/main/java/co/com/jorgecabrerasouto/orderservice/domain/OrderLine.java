@@ -29,24 +29,24 @@ public class OrderLine extends BaseEntity {
 		this.orderHeader = orderHeader;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(orderHeader, quantityOrdered);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getQuantityOrdered() != null ? getQuantityOrdered().hashCode() : 0);
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrderLine other = (OrderLine) obj;
-		return Objects.equals(orderHeader, other.orderHeader) && Objects.equals(quantityOrdered, other.quantityOrdered);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderLine)) return false;
+        if (!super.equals(o)) return false;
+
+        OrderLine orderLine = (OrderLine) o;
+
+        if (getQuantityOrdered() != null ? !getQuantityOrdered().equals(orderLine.getQuantityOrdered()) : orderLine.getQuantityOrdered() != null)
+            return false;
+        return getOrderHeader() != null ? getOrderHeader().equals(orderLine.getOrderHeader()) : orderLine.getOrderHeader() == null;
+    }
 
 }
