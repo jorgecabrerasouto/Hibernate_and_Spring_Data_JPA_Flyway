@@ -2,9 +2,11 @@ package co.com.jorgecabrerasouto.orderservice.domain;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+@Entity
 public class Product extends BaseEntity {
 
 	private String description;
