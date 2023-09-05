@@ -12,6 +12,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -51,7 +52,8 @@ import jakarta.persistence.OneToMany;
 })
 public class OrderHeader extends BaseEntity { 
 
-    private String customer;
+	@ManyToOne
+    private Customer customer;
     
     @Embedded
     private Address shippingAddress;
@@ -74,15 +76,17 @@ public class OrderHeader extends BaseEntity {
     	orderLine.setOrderHeader(this);
     }
 
-    public String getCustomer() {
-        return customer;
-    }
+    public Customer getCustomer() {
+		return customer;
+	}
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
 
-    public Address getShippingAddress() {
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public Address getShippingAddress() {
 		return shippingAddress;
 	}
 
