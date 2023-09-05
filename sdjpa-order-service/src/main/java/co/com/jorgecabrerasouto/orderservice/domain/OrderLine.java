@@ -1,7 +1,5 @@
 package co.com.jorgecabrerasouto.orderservice.domain;
 
-import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
