@@ -1,10 +1,14 @@
 package co.com.jorgecabrerasouto.orderservice.domain;
 
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Product extends BaseEntity {
@@ -13,6 +17,13 @@ public class Product extends BaseEntity {
 	
 	@Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
+	
+	@ManyToMany
+	@JoinTable(name = "product_category",
+		joinColumns = @JoinColumn(name = "product_id"),
+		inverseJoinColumns = @JoinColumn(name = "category_id"))
+	
+	private Set<Category> categories;
 
 	public String getDescription() {
 		return description;
@@ -28,6 +39,14 @@ public class Product extends BaseEntity {
 
 	public void setProductStatus(ProductStatus productStatus) {
 		this.productStatus = productStatus;
+	}
+	
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
