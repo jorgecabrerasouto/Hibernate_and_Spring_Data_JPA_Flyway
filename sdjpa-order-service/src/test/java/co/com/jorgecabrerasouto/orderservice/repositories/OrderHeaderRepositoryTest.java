@@ -61,8 +61,8 @@ class OrderHeaderRepositoryTest {
         
         OrderApproval approval = new OrderApproval();
         approval.setApprovedBy("JCS");
-        OrderApproval savedApproval = orderApprovalRepository.save(approval);
-        orderHeader.setOrderApproval(savedApproval);
+        
+        orderHeader.setOrderApproval(approval);
         
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
         
