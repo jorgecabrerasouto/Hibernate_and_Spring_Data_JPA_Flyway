@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import co.com.jorgecabrerasouto.orderservice.domain.Customer;
+import co.com.jorgecabrerasouto.orderservice.domain.OrderApproval;
 import co.com.jorgecabrerasouto.orderservice.domain.OrderHeader;
 import co.com.jorgecabrerasouto.orderservice.domain.OrderLine;
 import co.com.jorgecabrerasouto.orderservice.domain.Product;
@@ -26,6 +27,9 @@ class OrderHeaderRepositoryTest {
     
     @Autowired
     CustomerRepository customerRepository;
+    
+    @Autowired
+    OrderApprovalRepository orderApprovalRepository;
     
     @Autowired
     ProductRepository productRepository;
@@ -54,6 +58,11 @@ class OrderHeaderRepositoryTest {
         orderLine.setProduct(product);
         
         orderHeader.addOrderLine(orderLine);
+        
+        OrderApproval approval = new OrderApproval();
+        approval.setApprovedBy("JCS");
+        OrderApproval savedApproval = orderApprovalRepository.save(approval);
+        orderHeader.setOrderApproval(savedApproval);
         
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
         

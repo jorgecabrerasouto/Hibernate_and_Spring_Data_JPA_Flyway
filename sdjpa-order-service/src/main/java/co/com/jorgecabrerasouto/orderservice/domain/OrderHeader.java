@@ -14,6 +14,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @AttributeOverrides({
@@ -67,6 +68,9 @@ public class OrderHeader extends BaseEntity {
     @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
     private Set<OrderLine> orderLines;
     
+    @OneToOne
+    private OrderApproval orderApproval;
+    
     public void addOrderLine (OrderLine orderLine) {
     	if (orderLines == null) {
     		orderLines = new HashSet<>();
@@ -76,15 +80,21 @@ public class OrderHeader extends BaseEntity {
     	orderLine.setOrderHeader(this);
     }
 
-    public Customer getCustomer() {
-		return customer;
+    public OrderApproval getOrderApproval() {
+		return orderApproval;
 	}
 
+	public void setOrderApproval(OrderApproval orderApproval) {
+		this.orderApproval = orderApproval;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
 
 	public Address getShippingAddress() {
 		return shippingAddress;
