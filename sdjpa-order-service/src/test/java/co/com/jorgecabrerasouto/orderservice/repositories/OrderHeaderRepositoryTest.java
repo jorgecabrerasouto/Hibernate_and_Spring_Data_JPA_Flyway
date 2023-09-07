@@ -2,6 +2,8 @@ package co.com.jorgecabrerasouto.orderservice.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import co.com.jorgecabrerasouto.orderservice.domain.OrderHeader;
 import co.com.jorgecabrerasouto.orderservice.domain.OrderLine;
 import co.com.jorgecabrerasouto.orderservice.domain.Product;
 import co.com.jorgecabrerasouto.orderservice.domain.ProductStatus;
+import jakarta.persistence.EntityNotFoundException;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -99,5 +102,32 @@ class OrderHeaderRepositoryTest {
         assertNotNull(fetchedOrder.getId());
         assertNotNull(fetchedOrder.getCreatedDate());
         assertNotNull(fetchedOrder.getLastModifiedDate());
+    }
+    
+    @Test
+    void testDeleteCascade() {
+
+        OrderHeader orderHeader = new OrderHeader();
+        Customer customer = new Customer();
+        customer.setCustomerName("new Customer");
+        orderHeader.setCustomer(customerRepository.save(customer));
+
+        OrderLine orderLine = new OrderLine();
+        orderLine.setQuantityOrdered(3);
+        orderLine.setProduct(product);
+
+        orderHeader.addOrderLine(orderLine);
+        OrderHeader savedOrder = orderHeaderRepository.saveAndFlush(orderHeader);
+
+        System.out.println("order saved and flushed");
+
+        orderHeaderRepository.deleteById(savedOrder.getId());
+        orderHeaderRepository.flush();
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            OrderHeader fetchedOrder = orderHeaderRepository.getReferenceById(savedOrder.getId());
+
+            assertNull(fetchedOrder);
+        });
     }
 }
