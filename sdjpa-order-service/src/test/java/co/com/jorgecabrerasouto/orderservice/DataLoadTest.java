@@ -1,7 +1,9 @@
 package co.com.jorgecabrerasouto.orderservice;
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -41,6 +43,18 @@ public class DataLoadTest {
     ProductRepository productRepository;
     
     @Test
+    void testN_PlusOneProblem() {
+
+        Customer customer = customerRepository.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
+
+        IntSummaryStatistics totalOrdered = orderHeaderRepository.findAllByCustomer(customer).stream()
+                .flatMap(orderHeader -> orderHeader.getOrderLines().stream())
+                .collect(Collectors.summarizingInt(ol -> ol.getQuantityOrdered()));
+
+        System.out.println("total ordered: " + totalOrdered.getSum());
+    }
+    
+    @Test
     void testLazyVsEager() {
     	OrderHeader orderHeader = orderHeaderRepository.getReferenceById(5L);
     	
@@ -49,14 +63,14 @@ public class DataLoadTest {
     	System.out.println("Customer name is: " + orderHeader.getCustomer().getCustomerName());
     	
     }
-    @Disabled
+    //@Disabled
     @Rollback(value = false)
     @Test
     void testDataLoader() {
         List<Product> products = loadProducts();
         Customer customer = loadCustomers();
 
-        int ordersToCreate = 100;
+        int ordersToCreate = 10000;
 
         for (int i = 0; i < ordersToCreate; i++){
             System.out.println("Creating order #: " + i);
