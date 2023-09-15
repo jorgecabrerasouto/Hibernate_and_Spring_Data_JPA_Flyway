@@ -19,6 +19,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 
 @Entity
 @AttributeOverrides({
@@ -56,7 +57,10 @@ import jakarta.persistence.OneToOne;
     )
 })
 public class OrderHeader extends BaseEntity { 
-
+	
+	@Version
+	private Integer version;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     
@@ -76,6 +80,14 @@ public class OrderHeader extends BaseEntity {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
+    
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
     
     public OrderApproval getOrderApproval() {
 		return orderApproval;
