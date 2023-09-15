@@ -48,6 +48,16 @@ public class Product extends BaseEntity {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
+	
+    private Integer quantityOnHand = 0;
+
+    public Integer getQuantityOnHand() {
+        return quantityOnHand;
+    }
+
+    public void setQuantityOnHand(Integer quantityOnHand) {
+        this.quantityOnHand = quantityOnHand;
+    }
 
 	@Override
 	public int hashCode() {
