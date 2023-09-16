@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import co.com.jorgecabrerasouto.orderservice.domain.Product;
 import co.com.jorgecabrerasouto.orderservice.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -18,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 	public Product saveProduct(Product product) {
 		return productRepository.saveAndFlush(product);
 	}
-
+	@Transactional
 	@Override
 	public Product updateQOH(Long id, Integer quantityOnHand) {
 		Product product = productRepository.findById(id)

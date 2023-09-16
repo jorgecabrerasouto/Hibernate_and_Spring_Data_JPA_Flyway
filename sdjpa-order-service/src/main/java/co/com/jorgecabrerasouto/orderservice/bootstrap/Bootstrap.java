@@ -5,8 +5,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.orderservice.domain.Customer;
+import co.com.jorgecabrerasouto.orderservice.domain.Product;
+import co.com.jorgecabrerasouto.orderservice.domain.ProductStatus;
 import co.com.jorgecabrerasouto.orderservice.repositories.CustomerRepository;
 import co.com.jorgecabrerasouto.orderservice.repositories.OrderHeaderRepository;
+import co.com.jorgecabrerasouto.orderservice.services.ProductService;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -19,22 +22,26 @@ public class Bootstrap implements CommandLineRunner {
 	
 	@Autowired
 	CustomerRepository customerRepository;
-//	
-//	@Transactional
-//	public void readOrderData() {
-//		
-//		OrderHeader orderHeader = orderHeaderRepository.findById(1L).get();
-//		
-//		orderHeader.getOrderLines().forEach(ol -> {
-//			System.out.println(ol.getProduct().getDescription());
-//			ol.getProduct().getCategories().forEach(cat -> {
-//				System.out.println(cat.getDescription());
-//			});
-//		});
-//	}
+	
+	@Autowired
+	ProductService productService;
+
+	public void updateProduct() {
+        Product product = new Product();
+        product.setDescription("My Product");
+        product.setProductStatus(ProductStatus.NEW);
+
+        Product savedProduct = productService.saveProduct(product);
+
+        Product savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
+
+        System.out.println("Updatd Qty: " + savedProduct2.getQuantityOnHand());
+	}
 
 	@Override
 	public void run (String... args) throws Exception {
+		
+		updateProduct();
 		bootstrapOrderService.readOrderData();
 		
 		Customer customer = new Customer();
