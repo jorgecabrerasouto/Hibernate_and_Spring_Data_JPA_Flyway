@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import co.com.jorgecabrerasouto.orderservice.domain.Address;
 import co.com.jorgecabrerasouto.orderservice.domain.Customer;
 import co.com.jorgecabrerasouto.orderservice.domain.OrderApproval;
 import co.com.jorgecabrerasouto.orderservice.domain.OrderHeader;
@@ -88,6 +89,12 @@ class OrderHeaderRepositoryTest {
         OrderHeader orderHeader = new OrderHeader();
         Customer customer = new Customer();       
         customer.setCustomerName("New Customer");
+        customer.setPhone("0123456789");
+        
+        Address address = new Address();
+        address.setCity("AAAAAAAAAAAAAAAA");
+        customer.setAddress(address);
+        
         Customer savedCustomer = customerRepository.save(customer);
         
         orderHeader.setCustomer(savedCustomer);

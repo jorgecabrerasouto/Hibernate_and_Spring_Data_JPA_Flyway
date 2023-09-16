@@ -2,6 +2,8 @@ package co.com.jorgecabrerasouto.orderservice.domain;
 
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Embeddable;
 
 @Embeddable
@@ -18,6 +20,7 @@ public class Address {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	@Length(max = 30)
 	public String getCity() {
 		return city;
 	}

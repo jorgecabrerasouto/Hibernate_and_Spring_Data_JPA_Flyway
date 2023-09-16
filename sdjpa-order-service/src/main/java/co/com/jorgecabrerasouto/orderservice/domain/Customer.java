@@ -3,16 +3,20 @@ package co.com.jorgecabrerasouto.orderservice.domain;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
+import jakarta.validation.Valid;
 
 @Entity
 public class Customer extends BaseEntity{
 	
 	private String customerName;
 	
+	@Valid
 	@Embedded
 	private Address address;
 		
@@ -25,6 +29,7 @@ public class Customer extends BaseEntity{
 	@OneToMany(mappedBy ="customer")
     private Set<OrderHeader> orders = new LinkedHashSet<>();
 
+	@Length(max = 50)
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -41,6 +46,7 @@ public class Customer extends BaseEntity{
 		this.address = address;
 	}
 
+	@Length(max = 20)
 	public String getPhone() {
 		return phone;
 	}

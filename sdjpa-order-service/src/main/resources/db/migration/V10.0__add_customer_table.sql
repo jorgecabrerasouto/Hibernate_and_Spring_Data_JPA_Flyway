@@ -1,7 +1,7 @@
 create table customer
 (
     id bigint not null auto_increment primary key,
-    customer_name			varchar(255),
+    customer_name			varchar(50),
     address					varchar(30),
     city					varchar(30),
     state					varchar(30),
