@@ -1,4 +1,4 @@
-package co.com.jorgecabrerasouto.orderservice;
+package co.com.jorgecabrerasouto.sdjpainheritance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
