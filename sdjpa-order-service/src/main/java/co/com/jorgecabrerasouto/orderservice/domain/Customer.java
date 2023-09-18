@@ -10,17 +10,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Customer extends BaseEntity{
-	
+	@Size(max = 50)
 	private String customerName;
 	
 	@Valid
 	@Embedded
 	private Address address;
 		
+	@Size(max = 20)
 	private String phone;
+	
+	@Size(max = 255)
+	@Email
 	private String email;
 	
 	@Version
@@ -29,7 +35,7 @@ public class Customer extends BaseEntity{
 	@OneToMany(mappedBy ="customer")
     private Set<OrderHeader> orders = new LinkedHashSet<>();
 
-	@Length(max = 50)
+	@Size(max = 50)
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -46,7 +52,7 @@ public class Customer extends BaseEntity{
 		this.address = address;
 	}
 
-	@Length(max = 20)
+	@Size(max = 20)
 	public String getPhone() {
 		return phone;
 	}
