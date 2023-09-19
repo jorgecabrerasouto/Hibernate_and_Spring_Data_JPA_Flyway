@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "wp_usermeta")
@@ -17,10 +18,13 @@ public class UserMeta {
     @Column(name = "umeta_id")
     private Long id;
     private Long userId;
+    
+    @Size (max = 255)
+    @Column(columnDefinition = "longtext")
     private String metaKey;
 
     @Lob
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "longtext")
     private String metaValue;
 
 	public Long getId() {
