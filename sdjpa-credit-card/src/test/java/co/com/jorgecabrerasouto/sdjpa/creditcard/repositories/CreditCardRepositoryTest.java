@@ -9,12 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import co.com.jorgecabrerasouto.sdjpa.creditcard.domain.CreditCard;
+import co.com.jorgecabrerasouto.sdjpa.creditcard.services.EncryptionService;
 
 @SpringBootTest
 @ActiveProfiles("local")
 @AutoConfigureTestDatabase (replace = AutoConfigureTestDatabase.Replace.NONE)
 class CreditCardRepositoryTest {
 	final String CREDIT_CARD = "12345678900000";
+	
+	@Autowired
+	EncryptionService encryptionService;
 	
 	@Autowired
 	CreditCardRepository creditCardRepository;
@@ -28,7 +32,10 @@ class CreditCardRepositoryTest {
 		
 		CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
 		
-		System.out.println("Getting CC from database");
+		System.out.println("Getting CC from database: " + creditCard.getCreditCardNumber());
+		
+		System.out.println("CC at Rest");
+		System.out.println("CC Encrypted: " + encryptionService.encrypt(CREDIT_CARD));
 		
 		CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).get();
 		
