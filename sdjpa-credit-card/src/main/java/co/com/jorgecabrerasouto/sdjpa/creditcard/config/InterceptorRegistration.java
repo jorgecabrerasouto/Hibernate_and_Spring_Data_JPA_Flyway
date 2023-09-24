@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Configuration;
 
 import co.com.jorgecabrerasouto.sdjpa.creditcard.interceptors.EncryptionInterceptor;
 
-@Configuration
+//@Configuration
 public class InterceptorRegistration implements HibernatePropertiesCustomizer {
 
-    @Autowired
-    EncryptionInterceptor interceptor;
+    //@Autowired
+    //EncryptionInterceptor interceptor;
 
     @Override
     public void customize(Map<String, Object> hibernateProperties) {
-        hibernateProperties.put("hibernate.session_factory.interceptor", interceptor);
+    //    hibernateProperties.put("hibernate.session_factory.interceptor", interceptor);
     }
 }

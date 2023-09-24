@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 
 import co.com.jorgecabrerasouto.sdjpa.creditcard.services.EncryptionService;
 
-@Component
+//@Component
 public class EncryptionInterceptor extends EmptyInterceptor {
 
 	private final EncryptionService encryptionService;
