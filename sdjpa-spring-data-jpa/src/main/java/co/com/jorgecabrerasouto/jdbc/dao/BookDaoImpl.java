@@ -54,7 +54,7 @@ public class BookDaoImpl implements BookDao {
     
     @Override
     public Book getById(Long id) {
-        return bookRepository.getById(id);
+        return bookRepository.getReferenceById(id);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BookDaoImpl implements BookDao {
     @Transactional
     @Override
     public Book updateBook(Book book) {
-        Book foundBook = bookRepository.getById(book.getId());
+        Book foundBook = bookRepository.getReferenceById(book.getId());
         foundBook.setIsbn(book.getIsbn());
         foundBook.setPublisher(book.getPublisher());
         foundBook.setAuthorId(book.getAuthorId());

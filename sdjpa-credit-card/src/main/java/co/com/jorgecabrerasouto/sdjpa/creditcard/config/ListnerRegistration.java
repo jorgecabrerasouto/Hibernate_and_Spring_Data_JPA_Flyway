@@ -1,12 +1,7 @@
 package co.com.jorgecabrerasouto.sdjpa.creditcard.config;
 
-import org.hibernate.event.service.spi.EventListenerRegistry;
-import org.hibernate.event.spi.EventType;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.stereotype.Component;
 
 import co.com.jorgecabrerasouto.sdjpa.creditcard.listeners.PostLoadListener;
 import co.com.jorgecabrerasouto.sdjpa.creditcard.listeners.PreInsertListener;

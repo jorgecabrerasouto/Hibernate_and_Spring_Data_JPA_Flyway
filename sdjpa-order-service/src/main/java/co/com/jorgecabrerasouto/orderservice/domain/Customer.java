@@ -3,8 +3,6 @@ package co.com.jorgecabrerasouto.orderservice.domain;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.hibernate.validator.constraints.Length;
-
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

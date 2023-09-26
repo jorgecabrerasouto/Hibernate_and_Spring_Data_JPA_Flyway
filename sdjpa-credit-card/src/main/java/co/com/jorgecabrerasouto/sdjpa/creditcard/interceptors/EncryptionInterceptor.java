@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import co.com.jorgecabrerasouto.sdjpa.creditcard.services.EncryptionService;

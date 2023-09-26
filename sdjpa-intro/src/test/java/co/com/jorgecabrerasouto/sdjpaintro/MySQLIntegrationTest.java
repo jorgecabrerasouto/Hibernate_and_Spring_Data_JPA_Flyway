@@ -53,7 +53,7 @@ public class MySQLIntegrationTest {
     	assertThat(bookUuid).isNotNull();
     	assertThat(bookUuid.getId()).isNotNull();
     	
-    	BookUuid fetched = bookUuidRepository.getById(bookUuid.getId());
+    	BookUuid fetched = bookUuidRepository.getReferenceById(bookUuid.getId());
     	assertThat(fetched).isNotNull();
     }
     
@@ -63,7 +63,7 @@ public class MySQLIntegrationTest {
     	assertThat(authorUuid).isNotNull();
     	assertThat(authorUuid.getId()).isNotNull();
     	
-    	AuthorUuid fetched = authorUuidRepository.getById(authorUuid.getId());
+    	AuthorUuid fetched = authorUuidRepository.getReferenceById(authorUuid.getId());
     	assertThat(fetched).isNotNull();
     }
     
@@ -73,7 +73,7 @@ public class MySQLIntegrationTest {
         bookNatural.setTitle("My Book");
         BookNatural saved = bookNaturalRepository.save(bookNatural);
 
-        BookNatural fetched = bookNaturalRepository.getById(saved.getTitle());
+        BookNatural fetched = bookNaturalRepository.getReferenceById(saved.getTitle());
         assertThat(fetched).isNotNull();
     }
     
@@ -88,7 +88,7 @@ public class MySQLIntegrationTest {
         AuthorComposite saved = authorCompositeRepository.save(authorComposite);
         assertThat(saved).isNotNull();
 
-        AuthorComposite fetched = authorCompositeRepository.getById(nameId);
+        AuthorComposite fetched = authorCompositeRepository.getReferenceById(nameId);
         assertThat(fetched).isNotNull();
     }
     
@@ -100,7 +100,7 @@ public class MySQLIntegrationTest {
         AuthorEmbedded saved = authorEmbeddedRepository.save(authorEmbedded);
         assertThat(saved).isNotNull();
 
-        AuthorEmbedded fetched = authorEmbeddedRepository.getById(nameId);
+        AuthorEmbedded fetched = authorEmbeddedRepository.getReferenceById(nameId);
         assertThat(fetched).isNotNull();
     }
     
