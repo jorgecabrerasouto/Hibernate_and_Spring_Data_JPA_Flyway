@@ -1,5 +1,7 @@
 package co.com.jorgecabrerasouto.sdjpamultidb.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,10 +42,19 @@ public class CardHolderDatabaseConfiguration {
     public LocalContainerEntityManagerFactoryBean cardholderEntityManagerFactory(
             @Qualifier("cardholderDataSource") DataSource cardholderDataSource,
             EntityManagerFactoryBuilder builder){
-        return builder.dataSource(cardholderDataSource)
+    	
+    	Properties props = new Properties();
+		props.put("hibernate.hbm2ddl.auto", "validate");
+		
+		LocalContainerEntityManagerFactoryBean efb = 
+				builder.dataSource(cardholderDataSource)
                 .packages(CreditCardHolder.class)
                 .persistenceUnit("cardholder")
                 .build();
+		
+		efb.setJpaProperties(props);
+		
+		return efb;
     }
 
     @Bean
